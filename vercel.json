@@ -1,6 +1,14 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{*.html,*.css,*.js,images/**,bookings.json}"
+    },
+    "server.js": {
+      "includeFiles": "{*.html,*.css,*.js,images/**,bookings.json}"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
