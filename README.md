@@ -1,12 +1,10 @@
 <div align="center">
 
-  <img src="public/images/hero_food.png" alt="Raju Dhaba Banner" width="100%" style="border-radius: 12px; max-height: 380px; object-fit: cover; box-shadow: 0 8px 30px rgba(0,0,0,0.12);" />
+  <img src="public/images/logo.svg" alt="Raju Dhaba Logo" width="100%" style="max-width: 420px;" />
 
   <br />
-  <br />
 
-  <h1>🍛 RAJU DHABA</h1>
-  <p><strong>Authentic North Indian Cuisine — Full-Stack Reservation & Management Platform</strong></p>
+  <p><strong>Authentic North Indian Cuisine — Full-Stack Reservation Platform</strong></p>
 
   <p>
     <a href="#-features"><img src="https://img.shields.io/badge/Status-Live%20Ready-2ea44f?style=for-the-badge&logo=statuspage&logoColor=white" alt="Status" /></a>
@@ -17,81 +15,72 @@
   </p>
 
   <p>
-    <em>Experience ancestral culinary heritage blended with modern state-of-the-art web technology.</em>
+    <em>Experience ancestral culinary heritage blended with state-of-the-art web technology.</em>
   </p>
 
 </div>
 
 <hr />
 
+## 📋 Table of Contents
+
+- [📖 Overview](#-overview)
+- [✨ Key Features](#-key-features)
+- [🛠️ Technical Architecture & Stack](#-technical-architecture--stack)
+- [📡 REST API Documentation](#-rest-api-documentation)
+- [🚀 Getting Started](#-getting-started)
+- [☁️ Cloud Deployment](#-cloud-deployment)
+- [📸 Culinary Gallery](#-culinary-gallery)
+
+---
+
 ## 📖 Overview
 
-**Raju Dhaba** is a complete, modern web application crafted for a premium restaurant reservation experience. Built from the ground up without heavy frontend frameworks, it delivers blazing-fast performance, vibrant design aesthetics, and a robust RESTful API backend capable of running seamlessly both locally and on edge serverless platforms like **Vercel**.
+**Raju Dhaba** is a full-stack restaurant reservation web application designed for high performance and mobile-first aesthetics. Built without heavy frameworks, it delivers glassmorphism UI interactions and a robust RESTful API backend configured for instant serverless cloud deployment.
 
 ---
 
 ## ✨ Key Features
 
-| Feature | Description |
-| :--- | :--- |
-| 🎨 **Dynamic Premium UI** | Responsive, glassmorphism-inspired design with micro-animations and smooth scroll interactions. |
-| 📅 **Real-Time Booking Engine** | Instant table reservations with strict client-side and server-side validation rules (hours, date constraints, guest limits). |
-| 🔧 **Admin Control Dashboard** | Dedicated live portal (`/admin`) to review analytics, monitor guest count, and update reservation statuses (`Confirmed`, `Completed`, `Cancelled`, `No-Show`). |
-| ⚡ **Zero-Cold-Start CDN** | Optimized static architecture serving HTML/CSS/JS via Vercel Edge Network while dynamically scaling backend requests via Serverless Functions. |
-| 🔒 **Atomic JSON Storage** | Crash-proof file storage system with automatic recovery and seamless `/tmp` adaptation when running in read-only cloud environments. |
+- 🎨 **Dynamic Premium UI**: Responsive glassmorphism styling with smooth scroll animations.
+- 📅 **Real-Time Booking Engine**: Instant table reservations with rigorous client/server validation rules.
+- 🔧 **Admin Control Portal**: Interactive dashboard (`/admin`) to track live analytics and update reservation states.
+- ⚡ **Zero-Cold-Start CDN**: Edge CDN static serving (`/public/*`) combined with serverless backend execution.
+- 🔒 **Atomic JSON Storage**: Crash-proof file storage with auto-sensing `/tmp` adaptation for cloud environments.
 
 ---
 
 ## 🛠️ Technical Architecture & Stack
 
-```
-┌────────────────────────────────────────────────────────┐
-│                   CLIENT BROWSER                       │
-│     (HTML5 / Vanilla CSS3 / Modern JavaScript API)     │
-└───────────────────────────┬────────────────────────────┘
-                            │  HTTPS / REST JSON
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│              VERCEL EDGE CDN ROUTING                   │
-│   ├── /public/*  ──► Served instantly from Edge CDN    │
-│   └── /api/*     ──► Routed to Serverless Function     │
-└───────────────────────────┬────────────────────────────┘
-                            │  Serverless Execution
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│               EXPRESS.JS REST API SERVER               │
-│   ├── Payload Validator & Error Handlers               │
-│   ├── Controller Routes (/bookings, /stats)            │
-│   └── Atomic DB Module (bookings.json / /tmp)          │
-└────────────────────────────────────────────────────────┘
-```
+<div align="center">
+  <img src="public/images/architecture.svg" alt="Technical Architecture Stack" width="100%" style="max-width: 760px; margin: 12px 0;" />
+</div>
 
-### Technology Breakdown
+### Core Technologies
 
-- **Frontend**: Pure HTML5 Semantic markup, Custom CSS3 (CSS Variables, Flexbox/Grid, Keyframe Animations), Vanilla JavaScript (ES6+ Async/Await Fetch API).
-- **Backend Core**: [Node.js](https://nodejs.org/) & [Express.js](https://expressjs.com/) lightweight server API.
-- **Middleware**: `cors` for cross-origin requests, `express.json()` payload processing.
-- **Storage**: Native Node.js `fs` module implementing atomic temp-file swaps to guarantee data integrity.
-- **Cloud Infrastructure**: Vercel Serverless Functions (`api/index.js`) + Edge Network Caching (`vercel.json`).
+| Layer | Technologies Used |
+| :--- | :--- |
+| **Frontend** | HTML5 Semantic Markup, Custom CSS3 Variables & Animations, Vanilla JS Fetch API |
+| **Backend** | Node.js Runtime, Express.js REST Framework, CORS Middleware |
+| **Database** | Native Node `fs` atomic temporary swaps, Ephemeral cloud `/tmp` fallback |
+| **Cloud** | Vercel Serverless Functions (`api/index.js`), Global Edge CDN (`vercel.json`) |
 
 ---
 
 ## 📡 REST API Documentation
 
-The server provides a clean RESTful API mounted at `/api/bookings`.
+Base Endpoint: `/api/bookings`
 
-### Endpoints Overview
-
-| Method | Endpoint | Description | Request Body / Params |
+| Method | Route | Description | Payload / Params |
 | :---: | :--- | :--- | :--- |
-| `GET` | `/api/bookings` | Retrieve all table reservations | Optional: `?date=YYYY-MM-DD` |
-| `POST` | `/api/bookings` | Create a new table reservation | `{ fname, lname, phone, date, time, guests, special }` |
-| `GET` | `/api/bookings/stats` | Fetch aggregated dashboard metrics | *None* |
-| `GET` | `/api/bookings/:id` | Get details for a specific booking | `id` (URL Parameter) |
-| `PATCH`| `/api/bookings/:id/status`| Update reservation status | `{ status: "confirmed" \| "cancelled" \| "completed" \| "no-show" }` |
-| `DELETE`| `/api/bookings/:id` | Permanently delete a record | `id` (URL Parameter) |
+| `GET` | `/` | List reservations | `?date=YYYY-MM-DD` |
+| `POST` | `/` | Create booking | JSON Reservation Object |
+| `GET` | `/stats` | Dashboard metrics | *None* |
+| `GET` | `/:id` | Single booking | URL Parameter `id` |
+| `PATCH`| `/:id/status`| Update status | `{ "status": "confirmed" }` |
+| `DELETE`| `/:id` | Delete booking | URL Parameter `id` |
 
-#### Example Payload: Create Reservation (`POST /api/bookings`)
+#### Example POST Request Body
 ```json
 {
   "fname": "Rahul",
@@ -100,63 +89,43 @@ The server provides a clean RESTful API mounted at `/api/bookings`.
   "date": "2026-07-01",
   "time": "19:30",
   "guests": "4",
-  "special": "Corner table preferred, celebrating anniversary."
+  "special": "Corner table preferred."
 }
 ```
 
 ---
 
-## 🚀 Getting Started (Local Development)
+## 🚀 Getting Started
 
-Follow these simple steps to run the full-stack application on your local machine.
+```bash
+# 1. Clonerepository
+cd Raju-dhaba
 
-### Prerequisites
-- **Node.js** (v16.0.0 or higher)
-- **npm** (comes with Node.js)
+# 2. Install dependencies
+npm install
 
-### Installation & Execution
+# 3. Start dev server
+npm run dev
+```
 
-1. **Clone or Navigate to the repository**:
-   ```bash
-   cd Raju-dhaba
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-
-4. **Access the application**:
-   - 🌐 **Customer Website**: [http://localhost:3000](http://localhost:3000)
-   - 🔧 **Admin Dashboard**: [http://localhost:3000/admin](http://localhost:3000/admin)
-   - 📡 **API Endpoint**: [http://localhost:3000/api/bookings](http://localhost:3000/api/bookings)
+- 🌐 **Customer Website**: [http://localhost:3000](http://localhost:3000)
+- 🔧 **Admin Portal**: [http://localhost:3000/admin](http://localhost:3000/admin)
 
 ---
 
-## ☁️ Cloud & Vercel Deployment
+## ☁️ Cloud Deployment
 
-This codebase is pre-configured for zero-config deployment on **Vercel**.
-
-1. **Asset Separation**: All frontend assets reside in `public/` for instant Global Edge CDN distribution.
-2. **Serverless Entry Point**: All API calls (`/api/*`) seamlessly rewrite to `api/index.js`.
-3. **Read-Only Filesystem Adaptability**: The database engine automatically senses ephemeral cloud environments (`process.env.VERCEL`) and shifts database reads/writes to AWS Lambda's writable `/tmp` directory.
-
-To deploy:
+Pre-configured for zero-config deployment on **Vercel**:
 ```bash
 npx vercel --prod
 ```
 
 ---
 
-## 📸 Culinary Gallery Preview
+## 📸 Culinary Gallery
 
 <div align="center">
-  <img src="public/images/menu_tandoori.png" alt="Tandoori Specialties" width="30%" style="border-radius: 8px; margin: 4px;" />
-  <img src="public/images/menu_biryani.png" alt="Fragrant Biryani" width="30%" style="border-radius: 8px; margin: 4px;" />
-  <img src="public/images/menu_dal_makhani.png" alt="Slow Cooked Dal Makhani" width="30%" style="border-radius: 8px; margin: 4px;" />
+  <img src="public/images/menu_tandoori.png" alt="Tandoori Specialties" width="100%" style="max-width: 240px; border-radius: 8px; margin: 6px; display: inline-block;" />
+  <img src="public/images/menu_biryani.png" alt="Fragrant Biryani" width="100%" style="max-width: 240px; border-radius: 8px; margin: 6px; display: inline-block;" />
+  <img src="public/images/menu_dal_makhani.png" alt="Dal Makhani" width="100%" style="max-width: 240px; border-radius: 8px; margin: 6px; display: inline-block;" />
 </div>

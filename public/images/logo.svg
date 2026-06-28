@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff6a00" />
+      <stop offset="100%" stop-color="#ee0979" />
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff8c00" />
+      <stop offset="100%" stop-color="#e52e71" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Transparent Background -->
+
+  <!-- Logo Icon Container -->
+  <g transform="translate(40, 10)">
+    <!-- Outer Glowing Ring -->
+    <circle cx="50" cy="50" r="46" fill="none" stroke="url(#ringGrad)" stroke-width="4" filter="url(#glow)" opacity="0.9" />
+    <!-- Inner Circle -->
+    <circle cx="50" cy="50" r="38" fill="#1e293b" fill-opacity="0.8" stroke="#f8fafc" stroke-opacity="0.2" stroke-width="1" />
+    <!-- Emoji / Icon -->
+    <text x="50" y="66" font-size="44" text-anchor="middle">🍛</text>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(160, 52)">
+    <text x="0" y="12" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-size="42" font-weight="900" fill="url(#textGrad)" letter-spacing="1">RAJU DHABA</text>
+    <text x="3" y="42" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#94a3b8" letter-spacing="5">AUTHENTIC INDIAN CUISINE</text>
+  </g>
+</svg>
