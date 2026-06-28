@@ -17,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // Serve the frontend (HTML, CSS, JS, images) as static files
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname)));
 
 // ── Validation helper ────────────────────────────────────────────────────────
@@ -200,11 +201,15 @@ app.delete('/api/bookings/:id', (req, res) => {
 
 // Serve index and admin dashboard
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  const pubIndex = path.join(__dirname, 'public', 'index.html');
+  const fs = require('fs');
+  res.sendFile(fs.existsSync(pubIndex) ? pubIndex : path.join(__dirname, 'index.html'));
 });
 
 app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'admin.html'));
+  const pubAdmin = path.join(__dirname, 'public', 'admin.html');
+  const fs = require('fs');
+  res.sendFile(fs.existsSync(pubAdmin) ? pubAdmin : path.join(__dirname, 'admin.html'));
 });
 
 // ── 404 fallback ─────────────────────────────────────────────────────────────

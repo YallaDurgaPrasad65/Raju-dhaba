@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raju Dhaba — Authentic Indian Flavours Since 1998</title>
+  <meta name="description" content="Raju Dhaba serves authentic North Indian cuisine — rich dals, tandoori specialties, biryanis, and more. Experience the true taste of India. Book your table today." />
+  <meta name="keywords" content="Raju Dhaba, Indian restaurant, dal makhani, biryani, tandoori, North Indian food, dhaba food" />
+  <meta property="og:title" content="Raju Dhaba — Authentic Indian Flavours" />
+  <meta property="og:description" content="Experience the rich, bold flavours of authentic North Indian dhaba cuisine." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>" />
+</head>
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-logo">Raju Dhaba</div>
+      <div class="preloader-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <button id="back-top" aria-label="Back to top">↑</button>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img src="" alt="Gallery image" id="lightboxImg" />
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✅</span>
+    <span id="toastMsg">Table reserved successfully!</span>
+  </div>
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#hero"         onclick="closeMobileNav()">Home</a>
+    <a href="#about"        onclick="closeMobileNav()">Our Story</a>
+    <a href="#menu"         onclick="closeMobileNav()">Menu</a>
+    <a href="#gallery"      onclick="closeMobileNav()">Gallery</a>
+    <a href="#testimonials" onclick="closeMobileNav()">Reviews</a>
+    <a href="#reservation"  onclick="closeMobileNav()">Reserve</a>
+  </nav>
+
+  <!-- NAVBAR -->
+  <header id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo">
+          <span class="nav-logo-main">Raju Dhaba</span>
+          <span class="nav-logo-sub">Authentic Indian Cuisine</span>
+        </a>
+        <nav class="nav-links">
+          <a href="#about">Our Story</a>
+          <a href="#menu">Menu</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#testimonials">Reviews</a>
+          <a href="#reservation" class="btn btn-primary nav-cta">Reserve a Table</a>
+        </nav>
+        <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <img src="images/hero_food.png" alt="Authentic Indian food spread at Raju Dhaba" />
+    </div>
+    <div class="hero-overlay"></div>
+
+    <!-- Floating particles -->
+    <div class="hero-particles" id="heroParticles"></div>
+
+    <div class="container" style="position:relative;z-index:2;width:100%;">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Now Open — Dine In &amp; Takeaway Available
+        </div>
+
+        <h1 class="hero-title">
+          The Soul of<br/>
+          <span class="fire-text">India's Kitchen</span>
+        </h1>
+
+        <p class="hero-tagline">🍛 Har Bite Mein Ghar Ka Swad</p>
+
+        <p class="hero-desc">
+          At Raju Dhaba, every dish tells a story — slow-cooked dals, sizzling tandoori,
+          fragrant biryanis crafted with ancestral recipes passed down through generations.
+          Come taste the heart of North India.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#menu" class="btn btn-primary">
+            🍽️ Explore Menu
+          </a>
+          <a href="#reservation" class="btn btn-outline">
+            📅 Book a Table
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stats-card">
+          <div class="stat-item">
+            <div class="stat-num">25+</div>
+            <div class="stat-label">Years of Taste</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">80+</div>
+            <div class="stat-label">Menu Items</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">50K+</div>
+            <div class="stat-label">Happy Guests</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">4.9★</div>
+            <div class="stat-label">Avg. Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker">
+      <span class="ticker-item"><span class="ticker-dot"></span>🎉 Grand Thali Special — ₹249 only on Weekends</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>🍛 New on Menu: Peshwari Naan &amp; Rajasthani Laal Maas</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>📞 Call us: +91 98765 43210</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>🕐 Open Daily 11 AM – 11 PM</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>🎊 Catering &amp; Private Events Available</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>🎉 Grand Thali Special — ₹249 only on Weekends</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>🍛 New on Menu: Peshwari Naan &amp; Rajasthani Laal Maas</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>📞 Call us: +91 98765 43210</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>🕐 Open Daily 11 AM – 11 PM</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>🎊 Catering &amp; Private Events Available</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image-wrap reveal-left">
+          <div class="about-img-frame"></div>
+          <img class="about-img-main" src="images/restaurant_interior.png" alt="Raju Dhaba cozy interior" />
+          <div class="about-img-badge">
+            <div class="badge-num">1998</div>
+            <div class="badge-text">Est. Since</div>
+          </div>
+        </div>
+
+        <div class="about-text reveal-right">
+          <span class="section-label">Our Story</span>
+          <h2 class="section-title">More Than a Meal —<br/><span>A Memory</span></h2>
+          <div class="divider"></div>
+          <p class="section-subtitle">
+            Raju Dhaba was born in 1998 from a humble roadside kitchen in Punjab, 
+            driven by a passion for bold, honest cooking. Our founder Raju ji believed 
+            that great food needs no pretense — just pure ingredients, open fire, and love.
+          </p>
+          <br/>
+          <p class="section-subtitle">
+            Today, we carry that same spirit into every dish we serve. Every recipe is 
+            handcrafted, every spice carefully chosen, every plate served with the warmth 
+            of a home-cooked meal.
+          </p>
+
+          <div class="about-features">
+            <div class="about-feature">
+              <span class="feature-icon">🔥</span>
+              <div class="feature-text">
+                <strong>Tandoor-Fresh Daily</strong>
+                <span>Breads baked to order</span>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="feature-icon">🌿</span>
+              <div class="feature-text">
+                <strong>Farm-Fresh Ingredients</strong>
+                <span>Locally sourced produce</span>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="feature-icon">👨‍🍳</span>
+              <div class="feature-text">
+                <strong>Master Chefs</strong>
+                <span>25+ years of expertise</span>
+              </div>
+            </div>
+            <div class="about-feature">
+              <span class="feature-icon">🏺</span>
+              <div class="feature-text">
+                <strong>Traditional Recipes</strong>
+                <span>Passed down generations</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:36px;">
+            <a href="#reservation" class="btn btn-primary">Reserve Your Table →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="container">
+      <div class="menu-header">
+        <span class="section-label">What We Serve</span>
+        <h2 class="section-title reveal">Our <span>Signature</span> Menu</h2>
+        <div class="divider divider-center"></div>
+        <p class="section-subtitle reveal" style="margin:0 auto; text-align:center;">
+          Each dish is a celebration of Indian culinary heritage — bold spices, 
+          slow cooking, and generational recipes.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="menu-tabs">
+        <button class="menu-tab active" data-filter="all"    id="tab-all">All Items</button>
+        <button class="menu-tab"        data-filter="main"   id="tab-main">Main Course</button>
+        <button class="menu-tab"        data-filter="bread"  id="tab-bread">Breads</button>
+        <button class="menu-tab"        data-filter="rice"   id="tab-rice">Rice &amp; Biryani</button>
+        <button class="menu-tab"        data-filter="starter" id="tab-starter">Starters</button>
+        <button class="menu-tab"        data-filter="drinks" id="tab-drinks">Drinks</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="menu-grid" id="menuGrid">
+
+        <!-- MAINS -->
+        <div class="menu-card reveal" data-category="main">
+          <div class="menu-card-img">
+            <img src="images/menu_dal_makhani.png" alt="Dal Makhani" />
+            <span class="menu-badge">Chef's Pick</span>
+            <div class="menu-veg-badge veg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Dal Makhani</h3>
+            <p class="menu-card-desc">Slow-cooked black lentils in a velvety tomato-butter sauce, simmered overnight for deep, rich flavour.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹220</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="starter">
+          <div class="menu-card-img">
+            <img src="images/menu_tandoori.png" alt="Tandoori Chicken" />
+            <span class="menu-badge">Bestseller</span>
+            <div class="menu-veg-badge nonveg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Tandoori Chicken</h3>
+            <p class="menu-card-desc">Marinated in spiced yogurt and roasted in a blazing clay tandoor — charred, juicy, and irresistible.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹380</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="rice">
+          <div class="menu-card-img">
+            <img src="images/menu_biryani.png" alt="Dum Biryani" />
+            <span class="menu-badge">Signature</span>
+            <div class="menu-veg-badge nonveg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Dum Biryani</h3>
+            <p class="menu-card-desc">Aromatic basmati rice slow-cooked with tender meat, saffron, and whole spices sealed in a dum vessel.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹320</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="main">
+          <div class="menu-card-img">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#3D1A00,#6B2E00);display:flex;align-items:center;justify-content:center;font-size:4rem;">🧆</div>
+            <div class="menu-veg-badge veg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Paneer Butter Masala</h3>
+            <p class="menu-card-desc">Soft cottage cheese cubes in a rich, creamy tomato-cashew gravy with aromatic spices.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹270</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="bread">
+          <div class="menu-card-img">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#4A2800,#8B4500);display:flex;align-items:center;justify-content:center;font-size:4rem;">🫓</div>
+            <div class="menu-veg-badge veg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Garlic Naan</h3>
+            <p class="menu-card-desc">Soft leavened flatbread topped with garlic and butter, baked fresh in our tandoor oven.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹60</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="drinks">
+          <div class="menu-card-img">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#5C1A00,#A03000);display:flex;align-items:center;justify-content:center;font-size:4rem;">🍵</div>
+            <div class="menu-veg-badge veg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Masala Chai</h3>
+            <p class="menu-card-desc">Our legendary spiced tea — brewed with ginger, cardamom, and fresh milk in a clay kulhad.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹40</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="starter">
+          <div class="menu-card-img">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#2D1200,#5C2800);display:flex;align-items:center;justify-content:center;font-size:4rem;">🥙</div>
+            <div class="menu-veg-badge nonveg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Seekh Kebab</h3>
+            <p class="menu-card-desc">Minced lamb mixed with herbs and spices, skewered and grilled over charcoal to perfection.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹340</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="main">
+          <div class="menu-card-img">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#1A0800,#402000);display:flex;align-items:center;justify-content:center;font-size:4rem;">🍲</div>
+            <div class="menu-veg-badge nonveg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Butter Chicken</h3>
+            <p class="menu-card-desc">Tender chicken in a velvety, mildly spiced tomato-cream sauce — India's most beloved curry.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹310</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="rice">
+          <div class="menu-card-img">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#2E1000,#5A2500);display:flex;align-items:center;justify-content:center;font-size:4rem;">🍚</div>
+            <div class="menu-veg-badge veg"></div>
+          </div>
+          <div class="menu-card-body">
+            <h3 class="menu-card-title">Jeera Rice</h3>
+            <p class="menu-card-desc">Fluffy basmati rice tempered with cumin seeds, ghee, and fresh coriander. Simple perfection.</p>
+            <div class="menu-card-footer">
+              <span class="menu-price">₹120</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Specials Banner -->
+      <div class="specials-banner reveal">
+        <div class="specials-text">
+          <h3>🎉 Weekend Grand Thali — ₹249</h3>
+          <p>Includes Dal, Sabzi, Rice, 3 Rotis, Salad, Papad &amp; Sweet. Only Saturday &amp; Sunday. Limited seats!</p>
+        </div>
+        <a href="#reservation" class="btn btn-primary">Book Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <div class="gallery-header">
+        <span class="section-label">Visual Feast</span>
+        <h2 class="section-title reveal">A Peek Into Our <span>World</span></h2>
+        <div class="divider divider-center"></div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item reveal" onclick="openLightbox('images/hero_food.png')">
+          <img src="images/hero_food.png" alt="Indian food spread" />
+          <div class="gallery-overlay"><span>The Grand Spread</span></div>
+        </div>
+        <div class="gallery-item reveal" onclick="openLightbox('images/restaurant_interior.png')">
+          <img src="images/restaurant_interior.png" alt="Restaurant interior" />
+          <div class="gallery-overlay"><span>Our Ambiance</span></div>
+        </div>
+        <div class="gallery-item reveal" onclick="openLightbox('images/menu_tandoori.png')">
+          <img src="images/menu_tandoori.png" alt="Tandoori chicken" />
+          <div class="gallery-overlay"><span>Tandoori Nights</span></div>
+        </div>
+        <div class="gallery-item reveal" onclick="openLightbox('images/menu_biryani.png')">
+          <img src="images/menu_biryani.png" alt="Dum biryani" />
+          <div class="gallery-overlay"><span>The Dum Biryani</span></div>
+        </div>
+        <div class="gallery-item reveal" onclick="openLightbox('images/menu_dal_makhani.png')">
+          <img src="images/menu_dal_makhani.png" alt="Dal makhani" />
+          <div class="gallery-overlay"><span>Dal Makhani</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="testimonials-header">
+        <span class="section-label">What Guests Say</span>
+        <h2 class="section-title reveal">Voices of <span>Happiness</span></h2>
+        <div class="divider divider-center"></div>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-text">
+            "The Dal Makhani here is honestly the best I've ever had — and I've eaten at dhabas all over Punjab. 
+            The slow-cooked richness is unmatched. Feels exactly like home."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">A</div>
+            <div>
+              <div class="author-name">Amit Sharma</div>
+              <div class="author-location">📍 Delhi</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-text">
+            "We celebrated our anniversary here and the whole experience was magical. 
+            The ambiance is so warm and the Dum Biryani was absolutely heavenly. 
+            Will be back every month!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">P</div>
+            <div>
+              <div class="author-name">Priya &amp; Rahul Mehra</div>
+              <div class="author-location">📍 Chandigarh</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-text">
+            "Raju Dhaba is our family's go-to for Sunday lunches. The Grand Thali is 
+            incredible value, and the Masala Chai in a kulhad at the end? Pure nostalgia. 
+            Top-notch hospitality!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">S</div>
+            <div>
+              <div class="author-name">Sunita Verma</div>
+              <div class="author-location">📍 Jaipur</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVATION -->
+  <section id="reservation">
+    <div class="container">
+      <div class="reservation-wrap">
+        <div class="reservation-info reveal-left">
+          <span class="section-label">Find Us</span>
+          <h2>Come &amp; Dine<br/>With <span style="background:var(--gradient-fire);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Us Today</span></h2>
+          <div class="divider"></div>
+          <p>We'd love to have you. Walk in or book ahead to guarantee your table. 
+             Our team ensures every visit feels like a celebration.</p>
+
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div class="contact-detail">
+                <strong>Our Location</strong>
+                <span>NH-1, Near Bus Stand, Ludhiana, Punjab — 141001</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div class="contact-detail">
+                <strong>Call to Reserve</strong>
+                <span>+91 98765 43210 &nbsp;|&nbsp; +91 98765 43211</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🕐</div>
+              <div class="contact-detail">
+                <strong>Opening Hours</strong>
+                <span>Daily: 11:00 AM – 11:00 PM (Last order 10:30 PM)</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div class="contact-detail">
+                <strong>Email Us</strong>
+                <span>reservations@rajudhaba.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="reservation-form reveal-right">
+          <h3 class="form-title">🍽️ Reserve Your Table</h3>
+
+          <form id="reservationForm" onsubmit="handleReservation(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" placeholder="Raju" required />
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" placeholder="Sharma" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required />
+              </div>
+              <div class="form-group">
+                <label for="time">Time</label>
+                <input type="time" id="time" name="time" min="11:00" max="22:30" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="guests">Number of Guests</label>
+              <select id="guests" name="guests" required>
+                <option value="">Select guests</option>
+                <option value="1">1 Person</option>
+                <option value="2">2 People</option>
+                <option value="3">3 People</option>
+                <option value="4">4 People</option>
+                <option value="5">5 People</option>
+                <option value="6">6 People</option>
+                <option value="7+">7+ People (Group)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="special">Special Requests</label>
+              <textarea id="special" name="special" placeholder="Allergies, anniversaries, dietary preferences…"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit" id="submitBtn">
+              ✅ Confirm Reservation
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-main">Raju Dhaba</div>
+          <div class="footer-logo-sub">Authentic Indian Cuisine</div>
+          <p class="footer-desc">
+            Serving the authentic flavours of North India since 1998. 
+            Every meal is crafted with love, tradition, and the finest ingredients.
+          </p>
+          <div class="social-links">
+            <a class="social-link" href="#" aria-label="Facebook">f</a>
+            <a class="social-link" href="#" aria-label="Instagram">📷</a>
+            <a class="social-link" href="#" aria-label="YouTube">▶</a>
+            <a class="social-link" href="#" aria-label="WhatsApp">💬</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="#hero">Home</a>
+            <a href="#about">Our Story</a>
+            <a href="#menu">Menu</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#testimonials">Reviews</a>
+            <a href="#reservation">Reservations</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Opening Hours</h4>
+          <div class="hours-list">
+            <div class="hours-item"><span class="day">Mon – Thu</span><span class="time">11am – 10pm</span></div>
+            <div class="hours-item"><span class="day">Fri – Sat</span><span class="time">11am – 11pm</span></div>
+            <div class="hours-item"><span class="day">Sunday</span><span class="time">10am – 11pm</span></div>
+            <div class="hours-item"><span class="day">Holidays</span><span class="time">11am – 11pm</span></div>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-links">
+            <a href="#">📍 NH-1, Near Bus Stand,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ludhiana, Punjab 141001</a>
+            <a href="tel:+919876543210">📞 +91 98765 43210</a>
+            <a href="mailto:reservations@rajudhaba.com">✉️ reservations@rajudhaba.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2024 <span>Raju Dhaba</span>. All rights reserved. Made with ❤️ in India.</p>
+        <p>Privacy Policy &nbsp;·&nbsp; Terms of Service</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

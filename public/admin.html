@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Raju Dhaba Bookings</title>
+  <meta name="description" content="Admin panel to manage Raju Dhaba restaurant table reservations." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Tokens ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-base:    #0a0a0f;
+      --bg-card:    #12121a;
+      --bg-glass:   rgba(255,255,255,0.04);
+      --bg-hover:   rgba(255,255,255,0.07);
+      --border:     rgba(255,255,255,0.08);
+      --border-h:   rgba(255,255,255,0.14);
+
+      --amber:      #F5A623;
+      --amber-dark: #C47D0E;
+      --red:        #E74C3C;
+      --green:      #27AE60;
+      --blue:       #3498DB;
+      --purple:     #8B5CF6;
+
+      --text-1: #F0EDE8;
+      --text-2: #9E9897;
+      --text-3: #5C5755;
+
+      --gradient-fire: linear-gradient(135deg, #F5A623 0%, #E55A00 100%);
+      --gradient-card: linear-gradient(145deg, #16161f 0%, #0f0f17 100%);
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+
+      --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow: 0 0 24px rgba(245,166,35,0.15);
+
+      --font: 'Inter', sans-serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-base);
+      color: var(--text-1);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Scrollbar ──────────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: #2a2a38; border-radius: 3px; }
+
+    /* ── Layout ─────────────────────────────────────────────────────────── */
+    .layout { display: flex; min-height: 100vh; }
+
+    /* ── Sidebar ────────────────────────────────────────────────────────── */
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-brand-main {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: var(--gradient-fire);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+    .sidebar-brand-sub {
+      font-size: 0.7rem;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+
+    .sidebar-nav { padding: 16px 12px; flex: 1; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-2);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+      margin-bottom: 4px;
+    }
+    .nav-item:hover { background: var(--bg-hover); color: var(--text-1); }
+    .nav-item.active { background: rgba(245,166,35,0.12); color: var(--amber); }
+    .nav-item .icon { font-size: 1rem; width: 20px; text-align: center; }
+
+    .sidebar-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-2);
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--amber); }
+
+    /* ── Main Content ───────────────────────────────────────────────────── */
+    .main { flex: 1; overflow-x: hidden; }
+
+    /* ── Top Bar ────────────────────────────────────────────────────────── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-title { font-size: 1.1rem; font-weight: 700; color: var(--text-1); }
+    .topbar-date  { font-size: 0.8rem; color: var(--text-3); }
+
+    .topbar-refresh {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-2);
+      font-size: 0.8rem;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .topbar-refresh:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-h);
+      color: var(--text-1);
+    }
+
+    /* ── Page Content ───────────────────────────────────────────────────── */
+    .content { padding: 32px; }
+
+    /* ── Stats Cards ────────────────────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .stat-card:hover { border-color: var(--border-h); box-shadow: var(--shadow-card); }
+
+    .stat-label { font-size: 0.75rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+    .stat-value { font-size: 2rem; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+    .stat-value.amber  { color: var(--amber); }
+    .stat-value.green  { color: var(--green); }
+    .stat-value.red    { color: var(--red); }
+    .stat-value.purple { color: var(--purple); }
+    .stat-sub { font-size: 0.75rem; color: var(--text-3); }
+
+    /* ── Controls Bar ───────────────────────────────────────────────────── */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+    .search-wrap .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-3);
+      pointer-events: none;
+      font-size: 0.9rem;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 0.875rem;
+      padding: 10px 14px 10px 38px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input::placeholder { color: var(--text-3); }
+    .search-input:focus { border-color: var(--amber); }
+
+    .filter-select {
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 0.875rem;
+      padding: 10px 14px;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .filter-select:focus { border-color: var(--amber); }
+    .filter-select option { background: #1a1a26; }
+
+    .date-filter {
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-2);
+      font-family: var(--font);
+      font-size: 0.875rem;
+      padding: 10px 14px;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .date-filter:focus { border-color: var(--amber); }
+
+    /* ── Table ──────────────────────────────────────────────────────────── */
+    .table-wrap {
+      background: var(--gradient-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .booking-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .booking-table thead {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--border);
+    }
+    .booking-table th {
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    .booking-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .booking-table tbody tr:last-child { border-bottom: none; }
+    .booking-table tbody tr:hover { background: var(--bg-glass); }
+
+    .booking-table td {
+      padding: 14px 20px;
+      color: var(--text-1);
+      vertical-align: middle;
+    }
+
+    .td-id { color: var(--text-3); font-weight: 600; font-size: 0.75rem; }
+    .td-name { font-weight: 600; }
+    .td-phone { color: var(--text-2); font-size: 0.8rem; }
+    .td-datetime { white-space: nowrap; }
+    .td-date { font-weight: 600; font-size: 0.85rem; }
+    .td-time { color: var(--text-2); font-size: 0.75rem; margin-top: 2px; }
+    .td-guests { font-weight: 700; color: var(--amber); }
+    .td-special { color: var(--text-2); font-size: 0.78rem; max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .td-created { color: var(--text-3); font-size: 0.75rem; white-space: nowrap; }
+
+    /* ── Status Badge ───────────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+    .badge.confirmed  { background: rgba(39,174,96,0.15);  color: #2ECC71; }
+    .badge.confirmed  .badge-dot { background: #2ECC71; }
+    .badge.cancelled  { background: rgba(231,76,60,0.15);  color: #E74C3C; }
+    .badge.cancelled  .badge-dot { background: #E74C3C; }
+    .badge.completed  { background: rgba(52,152,219,0.15); color: #3498DB; }
+    .badge.completed  .badge-dot { background: #3498DB; }
+    .badge.no-show    { background: rgba(139,92,246,0.15); color: #8B5CF6; }
+    .badge.no-show    .badge-dot { background: #8B5CF6; }
+
+    /* ── Actions ────────────────────────────────────────────────────────── */
+    .actions { display: flex; gap: 6px; align-items: center; }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-glass);
+      color: var(--text-2);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font);
+    }
+    .btn-action:hover { border-color: var(--border-h); color: var(--text-1); background: var(--bg-hover); }
+    .btn-action.danger:hover { border-color: var(--red); color: var(--red); background: rgba(231,76,60,0.1); }
+    .btn-action.success:hover { border-color: var(--green); color: var(--green); background: rgba(39,174,96,0.1); }
+
+    /* ── Status Dropdown ────────────────────────────────────────────────── */
+    .status-select {
+      background: transparent;
+      border: none;
+      color: inherit;
+      font-family: var(--font);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      outline: none;
+      padding: 0;
+    }
+    .status-select option { background: #1a1a26; color: var(--text-1); }
+
+    /* ── Empty State ────────────────────────────────────────────────────── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 16px;
+    }
+    .empty-icon { font-size: 3.5rem; opacity: 0.4; }
+    .empty-title { font-size: 1.1rem; font-weight: 700; color: var(--text-2); }
+    .empty-sub   { font-size: 0.85rem; color: var(--text-3); }
+
+    /* ── Toast ──────────────────────────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-h);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      font-size: 0.875rem;
+      color: var(--text-1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 9999;
+      max-width: 340px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-color: rgba(39,174,96,0.4); }
+    .toast.error   { border-color: rgba(231,76,60,0.4); }
+
+    /* ── Loading Spinner ────────────────────────────────────────────────── */
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--amber);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-row td { text-align: center; padding: 48px; }
+
+    /* ── Confirm Modal ──────────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border-h);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      max-width: 420px;
+      width: 90%;
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+    }
+    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+
+    .modal-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .modal-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; }
+    .modal-sub { font-size: 0.875rem; color: var(--text-2); margin-bottom: 28px; line-height: 1.6; }
+
+    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+
+    .btn { padding: 10px 22px; border-radius: var(--radius-sm); font-family: var(--font); font-size: 0.875rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-ghost { background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-2); }
+    .btn-ghost:hover { background: var(--bg-hover); color: var(--text-1); }
+    .btn-danger { background: var(--red); color: #fff; }
+    .btn-danger:hover { background: #c0392b; transform: translateY(-1px); }
+    .btn-primary-admin { background: var(--gradient-fire); color: #fff; }
+    .btn-primary-admin:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── Responsive ─────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .content { padding: 20px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .booking-table th:nth-child(7),
+      .booking-table td:nth-child(7),
+      .booking-table th:nth-child(5),
+      .booking-table td:nth-child(5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon">⚠️</div>
+    <div class="modal-title" id="modalTitle">Confirm Action</div>
+    <div class="modal-sub" id="modalSub">Are you sure?</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="modalConfirmBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Layout -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-main">🍛 Raju Dhaba</div>
+      <div class="sidebar-brand-sub">Admin Dashboard</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active" href="/admin">
+        <span class="icon">📋</span> Bookings
+      </a>
+      <a class="nav-item" href="/admin#today" onclick="filterToday()">
+        <span class="icon">📅</span> Today's Table
+      </a>
+      <a class="nav-item" href="/api/bookings" target="_blank">
+        <span class="icon">📡</span> Raw API
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a class="back-link" href="/">← Back to Website</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Reservations</div>
+        <div class="topbar-date" id="topbarDate"></div>
+      </div>
+      <button class="topbar-refresh" onclick="loadAll()">🔄 Refresh</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Bookings</div>
+          <div class="stat-value amber" id="statTotal">—</div>
+          <div class="stat-sub">All time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Confirmed</div>
+          <div class="stat-value green" id="statConfirmed">—</div>
+          <div class="stat-sub">Active reservations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Today's Tables</div>
+          <div class="stat-value purple" id="statToday">—</div>
+          <div class="stat-sub">Bookings for today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Today's Guests</div>
+          <div class="stat-value amber" id="statGuests">—</div>
+          <div class="stat-sub">Covers expected today</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Search by name or phone…"
+            oninput="filterTable()"
+          />
+        </div>
+        <input
+          type="date"
+          class="date-filter"
+          id="dateFilter"
+          onchange="filterTable()"
+          title="Filter by date"
+        />
+        <select class="filter-select" id="statusFilter" onchange="filterTable()">
+          <option value="">All Status</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="completed">Completed</option>
+          <option value="no-show">No Show</option>
+        </select>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table class="booking-table" id="bookingTable">
+          <thead>
+            <tr>
+              <th>#ID</th>
+              <th>Guest</th>
+              <th>Phone</th>
+              <th>Date & Time</th>
+              <th>Guests</th>
+              <th>Special Request</th>
+              <th>Status</th>
+              <th>Booked At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr class="loading-row">
+              <td colspan="9"><div class="spinner"></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+  'use strict';
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let allBookings = [];
+  let pendingAction = null;
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set topbar date
+    document.getElementById('topbarDate').textContent =
+      new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    loadAll();
+  });
+
+  // ── Load All Data ─────────────────────────────────────────────────────────
+  async function loadAll() {
+    showTableLoading();
+    await Promise.all([loadBookings(), loadStats()]);
+  }
+
+  async function loadStats() {
+    try {
+      const res  = await fetch('/api/bookings/stats');
+      const data = await res.json();
+      if (!data.success) return;
+      const s = data.stats;
+      document.getElementById('statTotal').textContent     = s.total_bookings || 0;
+      document.getElementById('statConfirmed').textContent = s.confirmed || 0;
+      document.getElementById('statToday').textContent     = s.today_bookings || 0;
+      document.getElementById('statGuests').textContent    = s.today_guests || 0;
+    } catch (e) {
+      console.error('Stats fetch failed:', e);
+    }
+  }
+
+  async function loadBookings() {
+    try {
+      const res  = await fetch('/api/bookings');
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      allBookings = data.bookings;
+      filterTable();
+    } catch (e) {
+      document.getElementById('tableBody').innerHTML = `
+        <tr><td colspan="9">
+          <div class="empty-state">
+            <div class="empty-icon">⚠️</div>
+            <div class="empty-title">Failed to load bookings</div>
+            <div class="empty-sub">${e.message}</div>
+          </div>
+        </td></tr>
+      `;
+    }
+  }
+
+  function showTableLoading() {
+    document.getElementById('tableBody').innerHTML = `
+      <tr class="loading-row"><td colspan="9"><div class="spinner"></div></td></tr>
+    `;
+  }
+
+  // ── Filter & Render ───────────────────────────────────────────────────────
+  function filterTable() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const date   = document.getElementById('dateFilter').value;
+    const status = document.getElementById('statusFilter').value;
+
+    const filtered = allBookings.filter(b => {
+      const nameMatch  = `${b.fname} ${b.lname}`.toLowerCase().includes(search)
+                       || b.phone.includes(search);
+      const dateMatch  = date   ? b.date === date       : true;
+      const statusMatch = status ? b.status === status   : true;
+      return nameMatch && dateMatch && statusMatch;
+    });
+
+    renderTable(filtered);
+  }
+
+  function renderTable(bookings) {
+    const tbody = document.getElementById('tableBody');
+
+    if (bookings.length === 0) {
+      tbody.innerHTML = `
+        <tr><td colspan="9">
+          <div class="empty-state">
+            <div class="empty-icon">🍽️</div>
+            <div class="empty-title">No bookings found</div>
+            <div class="empty-sub">Try adjusting your search or filters.</div>
+          </div>
+        </td></tr>
+      `;
+      return;
+    }
+
+    tbody.innerHTML = bookings.map(b => `
+      <tr id="row-${b.id}">
+        <td class="td-id">#${b.id}</td>
+        <td class="td-name">${escHtml(b.fname)} ${escHtml(b.lname)}</td>
+        <td class="td-phone">${escHtml(b.phone)}</td>
+        <td class="td-datetime">
+          <div class="td-date">${formatDate(b.date)}</div>
+          <div class="td-time">${formatTime(b.time)}</div>
+        </td>
+        <td class="td-guests">${b.guests === '7+' ? '7+ 👥' : b.guests + ' 👤'}</td>
+        <td class="td-special" title="${escHtml(b.special || '')}">${b.special ? escHtml(b.special) : '<span style="color:var(--text-3)">—</span>'}</td>
+        <td>
+          <span class="badge ${b.status}">
+            <span class="badge-dot"></span>
+            ${b.status}
+          </span>
+        </td>
+        <td class="td-created">${formatDatetime(b.created_at)}</td>
+        <td>
+          <div class="actions">
+            ${b.status === 'confirmed' ? `
+              <button class="btn-action success" title="Mark Completed" onclick="changeStatus(${b.id}, 'completed')">✔</button>
+              <button class="btn-action danger"  title="Cancel Booking" onclick="confirmCancel(${b.id}, '${escHtml(b.fname)} ${escHtml(b.lname)}')">✕</button>
+            ` : `
+              <button class="btn-action" title="Restore (Confirm)" onclick="changeStatus(${b.id}, 'confirmed')" style="font-size:0.75rem;">↩</button>
+            `}
+            <button class="btn-action danger" title="Delete Permanently" onclick="confirmDelete(${b.id}, '${escHtml(b.fname)} ${escHtml(b.lname)}')">🗑</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Today Filter ──────────────────────────────────────────────────────────
+  function filterToday() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('dateFilter').value = today;
+    filterTable();
+  }
+
+  // ── Status Change ─────────────────────────────────────────────────────────
+  async function changeStatus(id, status) {
+    try {
+      const res  = await fetch(`/api/bookings/${id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+
+      // Update local state and re-render
+      const idx = allBookings.findIndex(b => b.id === id);
+      if (idx !== -1) allBookings[idx] = data.booking;
+      filterTable();
+      loadStats();
+      showToast(`✅ Booking #${id} marked as "${status}".`, 'success');
+    } catch (e) {
+      showToast(`❌ Error: ${e.message}`, 'error');
+    }
+  }
+
+  // ── Cancel ────────────────────────────────────────────────────────────────
+  function confirmCancel(id, name) {
+    openModal({
+      icon: '⚠️',
+      title: 'Cancel Reservation',
+      sub:  `Cancel the reservation for <strong>${escHtml(name)}</strong>? They will lose their table booking.`,
+      btnLabel: 'Yes, Cancel',
+      btnClass: 'btn-danger',
+      action: () => changeStatus(id, 'cancelled')
+    });
+  }
+
+  // ── Delete ────────────────────────────────────────────────────────────────
+  function confirmDelete(id, name) {
+    openModal({
+      icon: '🗑️',
+      title: 'Delete Booking',
+      sub:  `Permanently delete booking #${id} for <strong>${escHtml(name)}</strong>? This cannot be undone.`,
+      btnLabel: 'Delete Permanently',
+      btnClass: 'btn-danger',
+      action: async () => {
+        try {
+          const res  = await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
+          const data = await res.json();
+          if (!data.success) throw new Error(data.error);
+          allBookings = allBookings.filter(b => b.id !== id);
+          filterTable();
+          loadStats();
+          showToast(`🗑️ Booking #${id} deleted.`, 'success');
+        } catch (e) {
+          showToast(`❌ Error: ${e.message}`, 'error');
+        }
+      }
+    });
+  }
+
+  // ── Modal ─────────────────────────────────────────────────────────────────
+  function openModal({ icon, title, sub, btnLabel, btnClass, action }) {
+    document.getElementById('modalIcon').textContent  = icon;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalSub').innerHTML     = sub;
+    const btn = document.getElementById('modalConfirmBtn');
+    btn.textContent = btnLabel;
+    btn.className   = `btn ${btnClass}`;
+    pendingAction = action;
+    document.getElementById('confirmModal').classList.add('open');
+  }
+
+  document.getElementById('modalConfirmBtn').addEventListener('click', async () => {
+    if (pendingAction) {
+      closeModal();
+      await pendingAction();
+      pendingAction = null;
+    }
+  });
+
+  function closeModal() {
+    document.getElementById('confirmModal').classList.remove('open');
+  }
+
+  document.getElementById('confirmModal').addEventListener('click', e => {
+    if (e.target.id === 'confirmModal') closeModal();
+  });
+
+  // ── Toast ─────────────────────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${type} show`;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function formatTime(timeStr) {
+    const [h, m] = timeStr.split(':').map(Number);
+    const ampm   = h >= 12 ? 'PM' : 'AM';
+    return `${h % 12 || 12}:${String(m).padStart(2,'0')} ${ampm}`;
+  }
+
+  function formatDatetime(dt) {
+    if (!dt) return '—';
+    const d = new Date(dt);
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+         + ' ' + d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+  }
+</script>
+</body>
+</html>
