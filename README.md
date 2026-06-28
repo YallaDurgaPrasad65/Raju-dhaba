@@ -27,6 +27,7 @@
 - [📖 Overview](#-overview)
 - [✨ Key Features](#-key-features)
 - [🛠️ Technical Architecture & Stack](#-technical-architecture--stack)
+- [📂 Project Structure](#-project-structure)
 - [📡 REST API Documentation](#-rest-api-documentation)
 - [🚀 Getting Started](#-getting-started)
 - [☁️ Cloud Deployment](#-cloud-deployment)
@@ -64,6 +65,30 @@
 | **Backend** | Node.js Runtime, Express.js REST Framework, CORS Middleware |
 | **Database** | Native Node `fs` atomic temporary swaps, Ephemeral cloud `/tmp` fallback |
 | **Cloud** | Vercel Serverless Functions (`api/index.js`), Global Edge CDN (`vercel.json`) |
+
+---
+
+## 📂 Project Structure
+
+```text
+Raju-dhaba/
+├── 📁 api/                  # Cloud Serverless API Gateway
+│   └── index.js             # Vercel serverless handler routing to Express app
+├── 📁 public/               # Frontend Static Assets (Edge CDN)
+│   ├── 📁 images/           # Culinary gallery & vector SVG diagrams
+│   │   ├── logo.svg         # Transparent vector badge logo
+│   │   ├── architecture.svg # Mobile-optimized technical stack flowchart
+│   │   └── menu_*.png       # Signature dish gallery photos
+│   ├── index.html           # Main customer table booking homepage
+│   ├── admin.html           # Live management control portal
+│   ├── style.css            # Vanilla CSS styling & glassmorphism theme
+│   └── script.js            # Frontend interactive booking logic
+├── database.js              # Atomic JSON storage module (/tmp cloud fallback)
+├── server.js                # Core Express REST API controller & validation engine
+├── vercel.json              # Vercel deployment configuration & routing rules
+├── package.json             # Project metadata and dependency manifests
+└── README.md                # Project documentation
+```
 
 ---
 
