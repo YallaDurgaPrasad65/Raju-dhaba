@@ -8,12 +8,24 @@
 const fs   = require('fs');
 const path = require('path');
 
-const DB_FILE = path.join(__dirname, 'bookings.json');
+const isVercel = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+const DB_FILE = isVercel ? path.join('/tmp', 'bookings.json') : path.join(__dirname, 'bookings.json');
 
 // ── Bootstrap ────────────────────────────────────────────────────────────────
 // Create the DB file with an empty structure if it doesn't exist yet
 function _ensureDb() {
   if (!fs.existsSync(DB_FILE)) {
+    if (isVercel) {
+      const initialDb = path.join(__dirname, 'bookings.json');
+      if (fs.existsSync(initialDb)) {
+        try {
+          fs.copyFileSync(initialDb, DB_FILE);
+          return;
+        } catch (e) {
+          console.error('Could not copy initial bookings.json to /tmp:', e.message);
+        }
+      }
+    }
     fs.writeFileSync(DB_FILE, JSON.stringify({ nextId: 1, bookings: [] }, null, 2), 'utf-8');
   }
 }

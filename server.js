@@ -61,6 +61,14 @@ function validateBookingPayload(body) {
   return errors;
 }
 
+// Ensure compatibility if Vercel strips /api prefix when routing
+app.use((req, res, next) => {
+  if (req.url.startsWith('/bookings')) {
+    req.url = '/api' + req.url;
+  }
+  next();
+});
+
 // ── Routes ───────────────────────────────────────────────────────────────────
 
 /**
@@ -190,7 +198,11 @@ app.delete('/api/bookings/:id', (req, res) => {
   }
 });
 
-// Serve admin dashboard
+// Serve index and admin dashboard
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
@@ -201,13 +213,17 @@ app.use((req, res) => {
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log('');
-  console.log('  🍛  Raju Dhaba — Booking Server');
-  console.log('  ─────────────────────────────────────────');
-  console.log(`  🌐  Website  →  http://localhost:${PORT}`);
-  console.log(`  🔧  Admin    →  http://localhost:${PORT}/admin`);
-  console.log(`  📡  API      →  http://localhost:${PORT}/api/bookings`);
-  console.log('  ─────────────────────────────────────────');
-  console.log('  Press Ctrl+C to stop.\n');
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log('');
+    console.log('  🍛  Raju Dhaba — Booking Server');
+    console.log('  ─────────────────────────────────────────');
+    console.log(`  🌐  Website  →  http://localhost:${PORT}`);
+    console.log(`  🔧  Admin    →  http://localhost:${PORT}/admin`);
+    console.log(`  📡  API      →  http://localhost:${PORT}/api/bookings`);
+    console.log('  ─────────────────────────────────────────');
+    console.log('  Press Ctrl+C to stop.\n');
+  });
+}
+
+module.exports = app;
