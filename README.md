@@ -125,7 +125,9 @@ npx vercel --prod
 ## 📸 Culinary Gallery
 
 <div align="center">
-  <img src="public/images/menu_tandoori.png" alt="Tandoori Specialties" width="100%" style="max-width: 240px; border-radius: 8px; margin: 6px; display: inline-block;" />
-  <img src="public/images/menu_biryani.png" alt="Fragrant Biryani" width="100%" style="max-width: 240px; border-radius: 8px; margin: 6px; display: inline-block;" />
-  <img src="public/images/menu_dal_makhani.png" alt="Dal Makhani" width="100%" style="max-width: 240px; border-radius: 8px; margin: 6px; display: inline-block;" />
+  <img src="public/images/menu_tandoori.png" alt="Tandoori Specialties" width="200" />
+  &nbsp;&nbsp;
+  <img src="public/images/menu_biryani.png" alt="Fragrant Biryani" width="200" />
+  &nbsp;&nbsp;
+  <img src="public/images/menu_dal_makhani.png" alt="Dal Makhani" width="200" />
 </div>
