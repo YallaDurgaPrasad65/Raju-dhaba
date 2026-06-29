@@ -159,7 +159,7 @@ function openLightbox(src) {
 function closeLightbox() {
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(() => { lightboxImg.src = ''; }, 400);
+  setTimeout(() => { lightboxImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; }, 400);
 }
 
 lightboxClose.addEventListener('click', closeLightbox);
@@ -330,3 +330,228 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 const statsCard = document.querySelector('.stats-card');
 if (statsCard) statsObserver.observe(statsCard);
+
+/* ============================================================
+   LOGIN MODAL SYSTEM
+   ============================================================ */
+
+/* ---- Open / Close ---- */
+function openLoginModal(type) {
+  const overlayId = type === 'admin' ? 'adminLoginOverlay' : 'customerLoginOverlay';
+  const overlay = document.getElementById(overlayId);
+  if (!overlay) return;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLoginModal(type) {
+  const overlayId = type === 'admin' ? 'adminLoginOverlay' : 'customerLoginOverlay';
+  const overlay = document.getElementById(overlayId);
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e, type) {
+  const modalId = type === 'admin' ? 'adminLoginModal' : 'customerLoginModal';
+  if (!document.getElementById(modalId).contains(e.target)) {
+    closeLoginModal(type);
+  }
+}
+
+/* Close modals on Escape key */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeLoginModal('customer');
+    closeLoginModal('admin');
+  }
+});
+
+/* ---- Tab Switching (Customer) ---- */
+function switchLoginTab(type, tab) {
+  if (type === 'customer') {
+    const signinForm = document.getElementById('customerSigninForm');
+    const signupForm = document.getElementById('customerSignupForm');
+    const signinTab  = document.getElementById('cust-signin-tab');
+    const signupTab  = document.getElementById('cust-signup-tab');
+
+    if (tab === 'signin') {
+      signinForm.classList.remove('hidden-form');
+      signupForm.classList.add('hidden-form');
+      signinTab.classList.add('active');
+      signupTab.classList.remove('active');
+    } else {
+      signinForm.classList.add('hidden-form');
+      signupForm.classList.remove('hidden-form');
+      signinTab.classList.remove('active');
+      signupTab.classList.add('active');
+    }
+  }
+}
+
+/* ---- Password Visibility Toggle ---- */
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
+  }
+}
+
+/* ---- Forgot Password ---- */
+function showForgotPassword() {
+  showToast('📧 Password reset link will be sent to your email.', 4000);
+}
+
+/* ---- Customer Sign In ---- */
+async function handleCustomerLogin(e) {
+  e.preventDefault();
+  const btn   = document.getElementById('custLoginBtn');
+  const email = document.getElementById('cust-email').value.trim();
+  const pass  = document.getElementById('cust-password').value;
+
+  if (!email || !pass) {
+    showToast('⚠️ Please fill in all fields.');
+    return;
+  }
+
+  btn.textContent = '⏳ Signing in…';
+  btn.disabled = true;
+
+  // Simulate API call
+  await new Promise(r => setTimeout(r, 1200));
+
+  // Demo: accept any valid-looking credentials
+  btn.textContent = '✅ Signed In!';
+  btn.style.background = 'linear-gradient(135deg, #27AE60, #2ECC71)';
+  showToast(`🎉 Welcome back! You are now signed in as ${email}`, 5000);
+
+  setTimeout(() => {
+    btn.textContent = 'Sign In →';
+    btn.style.background = '';
+    btn.disabled = false;
+    closeLoginModal('customer');
+    document.getElementById('customerSigninForm').reset();
+    updateNavAfterLogin('customer', email.split('@')[0]);
+  }, 1800);
+}
+
+/* ---- Customer Register ---- */
+async function handleCustomerRegister(e) {
+  e.preventDefault();
+  const btn   = document.getElementById('custRegBtn');
+  const fname = document.getElementById('cust-reg-fname').value.trim();
+  const lname = document.getElementById('cust-reg-lname').value.trim();
+  const email = document.getElementById('cust-reg-email').value.trim();
+  const phone = document.getElementById('cust-reg-phone').value.trim();
+  const pass  = document.getElementById('cust-reg-password').value;
+
+  if (!fname || !lname || !email || !phone || !pass) {
+    showToast('⚠️ Please fill in all required fields.');
+    return;
+  }
+  if (pass.length < 6) {
+    showToast('⚠️ Password must be at least 6 characters.');
+    return;
+  }
+
+  btn.textContent = '⏳ Creating account…';
+  btn.disabled = true;
+
+  await new Promise(r => setTimeout(r, 1400));
+
+  btn.textContent = '✅ Account Created!';
+  btn.style.background = 'linear-gradient(135deg, #27AE60, #2ECC71)';
+  showToast(`🎉 Welcome, ${fname}! Your account has been created successfully.`, 5000);
+
+  setTimeout(() => {
+    btn.textContent = 'Create Account →';
+    btn.style.background = '';
+    btn.disabled = false;
+    closeLoginModal('customer');
+    document.getElementById('customerSignupForm').reset();
+    updateNavAfterLogin('customer', fname);
+  }, 1800);
+}
+
+/* ---- Admin Login ---- */
+async function handleAdminLogin(e) {
+  e.preventDefault();
+  const btn      = document.getElementById('adminLoginBtn');
+  const username = document.getElementById('admin-username').value.trim();
+  const password = document.getElementById('admin-password').value;
+  const pin      = document.getElementById('admin-pin').value;
+
+  if (!username || !password || !pin) {
+    showToast('⚠️ All admin fields are required.');
+    return;
+  }
+  if (pin.length !== 6 || !/^\d+$/.test(pin)) {
+    showToast('⚠️ Security PIN must be exactly 6 digits.');
+    return;
+  }
+
+  btn.textContent = '⏳ Verifying credentials…';
+  btn.disabled = true;
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  // Demo credentials: admin / admin123 / 123456
+  if (username === 'admin' && password === 'admin123' && pin === '123456') {
+    btn.textContent = '✅ Access Granted!';
+    btn.style.background = 'linear-gradient(135deg, #27AE60, #2ECC71)';
+    showToast('🛡️ Admin access granted! Redirecting to dashboard…', 4000);
+
+    setTimeout(() => {
+      btn.textContent = 'Access Dashboard →';
+      btn.style.background = '';
+      btn.disabled = false;
+      closeLoginModal('admin');
+      document.getElementById('adminLoginForm').reset();
+      // Redirect to admin panel
+      window.location.href = 'admin.html';
+    }, 2000);
+  } else {
+    btn.textContent = 'Access Dashboard →';
+    btn.style.background = '';
+    btn.disabled = false;
+    showToast('❌ Invalid credentials. Access denied.', 5000);
+    // Shake animation on the form
+    const form = document.getElementById('adminLoginModal');
+    form.style.animation = 'shake 0.4s ease';
+    setTimeout(() => { form.style.animation = ''; }, 400);
+  }
+}
+
+/* ---- Update Nav After Login ---- */
+function updateNavAfterLogin(type, name) {
+  if (type === 'customer') {
+    const loginBtn = document.getElementById('openCustomerLogin');
+    if (loginBtn) {
+      loginBtn.textContent = `👤 ${name}`;
+      loginBtn.style.background = 'rgba(39, 174, 96, 0.2)';
+      loginBtn.style.borderColor = 'rgba(39, 174, 96, 0.5)';
+      loginBtn.onclick = () => showToast(`👤 Logged in as ${name}. Click Admin to manage bookings.`, 4000);
+    }
+  }
+}
+
+/* ---- Shake Keyframe (injected dynamically) ---- */
+(function addShakeAnimation() {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes shake {
+      0%, 100% { transform: translateX(0) scale(1); }
+      20% { transform: translateX(-8px) scale(1); }
+      40% { transform: translateX(8px) scale(1); }
+      60% { transform: translateX(-5px) scale(1); }
+      80% { transform: translateX(5px) scale(1); }
+    }
+  `;
+  document.head.appendChild(style);
+})();
+

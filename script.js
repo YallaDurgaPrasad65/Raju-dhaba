@@ -159,7 +159,7 @@ function openLightbox(src) {
 function closeLightbox() {
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(() => { lightboxImg.src = ''; }, 400);
+  setTimeout(() => { lightboxImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; }, 400);
 }
 
 lightboxClose.addEventListener('click', closeLightbox);
